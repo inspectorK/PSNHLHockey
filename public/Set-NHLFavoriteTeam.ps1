@@ -30,12 +30,12 @@ function Set-NHLFavoriteTeam {
         [string]$SavePath = (Join-Path (Split-Path -Path $PSScriptRoot -Parent) "settings.xml")
 
         # update PSNHL_SETTINGS in memory
-        $Global:PSNHLSettings.settings.data.favoriteTeamName = $TeamName.ToString
-        $Global:PSNHLSettings.settings.data.favoriteTeamID = (Get-NHLTeamID -TeamName $TeamName)
+        $Global:PSNHL_Settings.settings.data.favoriteTeamName = $TeamName.ToString
+        $Global:PSNHL_Settings.settings.data.favoriteTeamID = (Get-NHLTeamID -TeamName $TeamName)
 
         try 
         {
-            $Global:PSNHLSettings.Save($SavePath)
+            $Global:PSNHL_Settings.Save($SavePath)
         }
         catch
         {
