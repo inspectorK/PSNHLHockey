@@ -69,6 +69,13 @@ function Get-NHLTeamNextGame {
             Write-Error -Message "Error requesting team info from NHL.com api. The attempted request was: $RequestURI"
         }
 
-        return $GetResponse.teams.nextGameSchedule.dates.games
+        $GetResponse_NextGameInfo = $GetResponse.teams.nextGameSchedule.dates.games
+        $NextGameInfo = [NHLTeamNextGameInfo]::new()
+        $NextGameInfo.Venue = $GetResponse_NextGameInfo.venue.name
+        $NextGameInfo.HomeTeam = $GetResponse_NextGameInfo.teams.home.team.id
+        $NextGameInfo.AwayTeam = $GetResponse_NextGameInfo.teams.away.team.id
+        $NextGameInfo.GameDate = Get-Date $GetResponse_NextGameInfo.gameDate
+
+        return $NextGameInfo
     }
 }

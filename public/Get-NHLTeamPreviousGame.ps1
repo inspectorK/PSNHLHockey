@@ -69,6 +69,16 @@ function Get-NHLTeamPreviousGame {
             Write-Error -Message "Error requesting team info from NHL.com api. The attempted request was: $RequestURI"
         }
 
-        return $GetResponse.teams.previousGameSchedule.dates.games
+        $GetResponse_PreviousGameInfo = $GetResponse.teams.previousGameSchedule.dates.games
+        $PrevGameInfo = [NHLTeamPreviousGameInfo]::new()
+        $PrevGameInfo.GameDate = Get-Date $GetResponse_PreviousGameInfo.gameDate
+        $PrevGameInfo.HomeTeam = $GetResponse_PreviousGameInfo.teams.home.team.id
+        $PrevGameInfo.AwayTeam = $GetResponse_PreviousGameInfo.teams.away.team.id
+        $PrevGameInfo.HomeScore = $GetResponse_PreviousGameInfo.teams.home.score
+        $PrevGameInfo.AwayScore = $GetResponse_PreviousGameInfo.teams.away.score
+        $PrevGameInfo.Venue = $GetResponse_PreviousGameInfo.venue.name
+        $PrevGameInfo.GameState = $GetResponse_PreviousGameInfo.status.detailedState
+
+        return $PrevGameInfo
     }
 }

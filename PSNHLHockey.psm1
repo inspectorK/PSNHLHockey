@@ -36,6 +36,26 @@ enum NHLTeams {
     VegasGoldenKnights = 54
 }
 
+# Define custom classes
+class NHLTeamNextGameInfo
+{
+   [DateTime]$GameDate
+   [NHLTeams]$HomeTeam
+   [NHLTeams]$AwayTeam
+   [System.String]$Venue
+}
+
+class NHLTeamPreviousGameInfo
+{
+   [DateTime]$GameDate
+   [String]$GameState
+   [NHLTeams]$HomeTeam
+   [int]$HomeScore
+   [NHLTeams]$AwayTeam
+   [int]$AwayScore
+   [System.String]$Venue
+}
+
 [xml]$Global:PSNHL_SETTINGS = Get-Content -Path (Join-Path $PSScriptRoot "settings.xml")
 
 $public = Get-ChildItem -Path (Join-Path $PSScriptRoot "public") -Recurse -Filter *.ps1

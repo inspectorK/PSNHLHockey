@@ -53,9 +53,12 @@ function Get-NHLTeam {
 
         if ($PSCmdlet.ParameterSetName -ne "GetAllTeams")
         {
-            # if we got a name, we need to lookup the ID
-            $TeamID = Get-NHLTeamID -TeamName $TeamName
-            
+            if ($PSCmdlet.ParameterSetName -eq "GetTeamByTeamName")
+            {
+                # if we got a name, we need to lookup the ID
+                $TeamID = Get-NHLTeamID -TeamName $TeamName
+            }
+
             # Now lets validate the ID and set the api request params
             if ($TeamID -le 0)
             {
