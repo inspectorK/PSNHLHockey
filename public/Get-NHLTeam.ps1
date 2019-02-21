@@ -28,7 +28,6 @@ Get-NHLTeam -All
 This example returns all NHL teams
 
 #>
-
 function Get-NHLTeam {
     [CmdletBinding()]
     param (

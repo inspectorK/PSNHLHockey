@@ -58,6 +58,7 @@ class NHLTeamPreviousGameInfo
 
 [xml]$Global:PSNHL_SETTINGS = Get-Content -Path (Join-Path $PSScriptRoot "settings.xml")
 
+
 $public = Get-ChildItem -Path (Join-Path $PSScriptRoot "public") -Recurse -Filter *.ps1
 $private = Get-ChildItem -Path (Join-Path $PSScriptRoot "private") -Recurse -Filter *.ps1
 
