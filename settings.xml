@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <nhlapi>
+        <rootendpoint>https://statsapi.web.nhl.com/api/v1/</rootendpoint>
+    </nhlapi>
+    <data>
+        <favoriteTeamName></favoriteTeamName>
+        <favoriteTeamID></favoriteTeamID>
+    </data>
+</settings>
+
