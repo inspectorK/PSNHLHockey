@@ -4,7 +4,9 @@ Get an NHL Team
 
 .DESCRIPTION
 This cmdlet uses the NHL.com API to return an NHL team object.  The team to retrieve can be passed 
-via NHLTeam enum or integral ID
+via NHLTeam enum or integral ID.
+
+This cmdlet supports NHLFavoriteTeam functionality.  See Get-NHLFavoriteTeam and Set-NHLFavoriteTeam for more information
 
 .PARAMETER TeamName
 The NHL team name to get.  The team name is an NHLTeam enum.
@@ -70,7 +72,6 @@ function Get-NHLTeam {
                     Write-Error "There is no favorite NHLTeam currently set.  Use Set-NHLFavoriteTeam to set a favorite team"
                     break
                 }
-
             }
 
 

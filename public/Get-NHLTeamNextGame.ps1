@@ -6,6 +6,8 @@ Get the next game an NHL Team is scheduled to play
 This cmdlet uses the NHL.com API to return an NHL game object.  The team to retrieve can be passed 
 via NHLTeam enum or integral ID
 
+This cmdlet supports NHLFavoriteTeam functionality.  See Get-NHLFavoriteTeam and Set-NHLFavoriteTeam for more information
+
 .PARAMETER TeamName
 The NHL team.  The team name is an NHLTeam enum.
 
@@ -24,10 +26,16 @@ Get-NHLTeamNextGame -TeamID 4
 This example uses the NHL.com api team ID to return the next scheduled
 game information for the Philadelphia Flyers.
 
+.EXAMPLE
+Set-FavoriteNHLTeam -TeamName PhiladelphiaFlyers
+Get-NHLTeamNextGame
+
+This example will set the favorite team for the user as the PhiladelphiaFlyers.  Now, Get-NHLTeamNextGame will get the favorite team's next game by default if not specified
+
 #>
 
 function Get-NHLTeamNextGame {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="GetNextGameByFavorite")]
     param (
     # Parameter help description
     [Parameter(Mandatory=$false, Position=0, ParameterSetName="GetNextGameByTeamName")]
@@ -44,6 +52,20 @@ function Get-NHLTeamNextGame {
         [string]$RequestURINextGameParams = "?expand=team.schedule.next"
         [string]$RequestURITeamParams = ""
         [string]$RequestURI = "https://statsapi.web.nhl.com/api/v1/teams/"
+
+        # check if there is a favorite team set and we did not override with a TeamName
+        if ($PSCmdlet.ParameterSetName -eq "GetNextGameByFavorite")
+        {
+            if ($Global:PSNHL_SETTINGS.settings.data.favoriteTeamID)
+            {
+                $TeamID = $Global:PSNHL_SETTINGS.settings.data.favoriteTeamID
+            }
+            else 
+            {
+                Write-Error "There is no favorite NHLTeam currently set.  Use Set-NHLFavoriteTeam to set a favorite team"
+                break
+            }
+        }
 
         if ($PSCmdlet.ParameterSetName -eq "GetNextGameByTeamName")
         {

@@ -6,6 +6,8 @@ Get the previous game an NHL Team has played
 This cmdlet uses the NHL.com API to return an NHL game object.  The team to retrieve can be passed 
 via NHLTeam enum or integral ID
 
+This cmdlet supports NHLFavoriteTeam functionality.  See Get-NHLFavoriteTeam and Set-NHLFavoriteTeam for more information
+
 .PARAMETER TeamName
 The NHL team.  The team name is an NHLTeam enum.
 
@@ -24,10 +26,16 @@ Get-NHLTeamPreviousGame -TeamID 4
 This example uses the NHL.com api team ID to return the previously played
 game information for the Philadelphia Flyers.
 
+.EXAMPLE
+Set-FavoriteNHLTeam -TeamName PhiladelphiaFlyers
+Get-NHLTeamPreviousGame
+
+This example will set the favorite team for the user as the PhiladelphiaFlyers.  Now, Get-NHLTeamPreviousGame will get the favorite team's previous game by default if not specified
+
 #>
 
 function Get-NHLTeamPreviousGame {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="GetPreviousGameByFavorite")]
     param (
     # Parameter help description
     [Parameter(Mandatory=$false, Position=0, ParameterSetName="GetPreviousGameByTeamName")]
@@ -45,6 +53,20 @@ function Get-NHLTeamPreviousGame {
         [string]$RequestURITeamParams = ""
         [string]$RequestURI = "https://statsapi.web.nhl.com/api/v1/teams/"
 
+        # check if there is a favorite team set and we did not override with a TeamName
+        if ($PSCmdlet.ParameterSetName -eq "GetPreviousGameByFavorite")
+        {
+            if ($Global:PSNHL_SETTINGS.settings.data.favoriteTeamID)
+            {
+                $TeamID = $Global:PSNHL_SETTINGS.settings.data.favoriteTeamID
+            }
+            else 
+            {
+                Write-Error "There is no favorite NHLTeam currently set.  Use Set-NHLFavoriteTeam to set a favorite team"
+                break
+            }
+        }
+        
         if ($PSCmdlet.ParameterSetName -eq "GetPreviousGameByTeamName")
         {
             # if we got a name, we need to lookup the ID

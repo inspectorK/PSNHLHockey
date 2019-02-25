@@ -3,7 +3,9 @@
 Get the current favorite team if it is set
 
 .DESCRIPTION
-This cmdlet gets the currently set favorite team
+This cmdlet gets the currently set favorite team.  See Set-NHLFavoriteTeam for more information.
+
+Some cmdlets in the PSNHLHockey module support using the favorite team as a default parameter if a specific team is omitted.
 
 .PARAMETER Session
 Get the currently set favorite team for the current session
