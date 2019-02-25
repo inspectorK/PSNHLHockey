@@ -27,9 +27,15 @@ Get-NHLTeam -All
 
 This example returns all NHL teams
 
+.EXAMPLE
+Set-FavoriteNHLTeam -TeamName PhiladelphiaFlyers
+Get-NHLTeam
+
+This example will set the favorite team for the user as the PhiladelphiaFlyers.  Now, Get-NHLTeam will get the favorite team by default if not specified
+
 #>
 function Get-NHLTeam {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "GetTeamByFavorite")]
     param (
     # Parameter help description
     [Parameter(Mandatory=$false, ParameterSetName="GetTeamByTeamName")]
@@ -40,7 +46,7 @@ function Get-NHLTeam {
     [Int32]
     $TeamID,
 
-    [Parameter(Mandatory=$false, ParameterSetName="GetAllTeams")]
+    [Parameter(Mandatory=$false)]
     [switch]
     $All
     )
@@ -50,11 +56,27 @@ function Get-NHLTeam {
         [string]$RequestURIParams = ""
         [string]$RequestURI = "https://statsapi.web.nhl.com/api/v1/teams/"
 
-        if ($PSCmdlet.ParameterSetName -ne "GetAllTeams")
+        if (!$All)
         {
+            # check if there is a favorite team set and we did not override with a TeamName
+            if ($PSCmdlet.ParameterSetName -eq "GetTeamByFavorite")
+            {
+                if ($Global:PSNHL_SETTINGS.settings.data.favoriteTeamID)
+                {
+                    $TeamID = $Global:PSNHL_SETTINGS.settings.data.favoriteTeamID
+                }
+                else 
+                {
+                    Write-Error "There is no favorite NHLTeam currently set.  Use Set-NHLFavoriteTeam to set a favorite team"
+                    break
+                }
+
+            }
+
+
             if ($PSCmdlet.ParameterSetName -eq "GetTeamByTeamName")
             {
-                # if we got a name, we need to lookup the ID
+                # if we got a name, we need to lookup the ID and use that overriding favorite team
                 $TeamID = Get-NHLTeamID -TeamName $TeamName
             }
 
