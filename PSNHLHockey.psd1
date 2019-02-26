@@ -9,10 +9,10 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = '.\PSNHLHockey.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.1.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -69,7 +69,7 @@ PowerShellVersion = '5.1'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
+FunctionsToExport = @('Get-NHLTeam', 'Get-NHLTeamNextGame', 'Get-NHLTeamPreviousGame', 'Get-NHLFavoriteTeam', 'Set-NHLFavoriteTeam', 'Get-NHLTeamID')
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -87,7 +87,15 @@ AliasesToExport = @()
 # ModuleList = @()
 
 # List of all files packaged with this module
-# FileList = @()
+FileList = @('PSNHLHockey.psd1', 
+             'PSNHLHockey.psm1',
+             'settings.xml',
+             'public/Get-NHLTeam',
+             'public/Get-NHLTeamNextGame',
+             'public/Get-NHLTeamPreviousGame',
+             'public/Get-NHLFavoriteTeam',
+             'public/Set-NHLFavoriteTeam',
+             'public/Get-NHLTeamID')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
@@ -95,13 +103,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @("hockey", "NHL", "sports")
+        Tags = @("hockey", "NHL", "sports","sport")
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/inspectorK/PSNHLHockey'
 
         # A URL to an icon representing this module.
         # IconUri = ''
