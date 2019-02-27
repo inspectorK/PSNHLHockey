@@ -1,4 +1,4 @@
-<#region HELP
+<#
 .SYNOPSIS 
 Get the next game an NHL Team is scheduled to play
 

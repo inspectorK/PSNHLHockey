@@ -1,4 +1,4 @@
-<#region HELP
+<#
 .SYNOPSIS 
 Set the user's favorite NHL team
 

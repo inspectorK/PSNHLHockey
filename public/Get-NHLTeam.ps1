@@ -1,4 +1,4 @@
-<#region HELP
+<#
 .SYNOPSIS 
 Get an NHL Team
 

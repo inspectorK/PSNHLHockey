@@ -1,4 +1,4 @@
-<#region HELP
+<#
 .SYNOPSIS 
 Get the current favorite team if it is set
 

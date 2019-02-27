@@ -1,4 +1,4 @@
-<#region HELP
+<#
 .SYNOPSIS 
 Get the previous game an NHL Team has played
 
