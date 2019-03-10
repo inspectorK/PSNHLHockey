@@ -23,14 +23,19 @@ Return the absolute numerical team statistics
 Get-NHLTeamStatistics -NHLTeam PhiladelphiaFlyers
 
 This example will get the NHLTeam statistics for the Philadelphia Flyers
+.EXAMPLE
+Get-NHLTeamStatistics -NHLTeam PhiladelphiaFlyers -Relative
 
+This example will return the team stats relative to the league, for example "1st" or "5th"
+.EXAMPLE
+Get-NHLTeamStatistics -NHLTeam PhiladelphiaFlyers -Absolute
+
+This example will return the absolute numerical stats for the PhiladelphiaFlyers
 .EXAMPLE
 Set-FavoriteNHLTeam -TeamName PhiladelphiaFlyers
 Get-NHLTeamStatistics
 
 This example will set the favorite team for the user as the PhiladelphiaFlyers.  Now, Get-NHLTeamStatistics will get the statistics for the favorite team by default if not specified
-
-
 #>
 function Get-NHLTeamStatistics {
     [CmdletBinding(DefaultParameterSetName = "GetTeamStatsByFavorite")]
